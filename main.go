@@ -10,13 +10,18 @@ import (
 )
 
 func main() {
+	listenPort := os.Getenv("PORT")
+	if listenPort == "" {
+		listenPort = ":8080"
+	}
+
 	hostname, err := os.Hostname()
 	if err != nil {
 		panic(err)
 	}
 
-	log.Println("Listening at :8080")
-	if err := http.ListenAndServe(":8080", &handler{hostname}); err != nil {
+	log.Println("Listening at " + listenPort)
+	if err := http.ListenAndServe(listenPort, &handler{hostname}); err != nil {
 		panic(err)
 	}
 }
